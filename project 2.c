@@ -403,6 +403,27 @@ void Allocation(PriorityQueue *pq)
     display_branch_student(instru);
 }
 
+void readStudentsFromCSV(PriorityQueue *pq) {
+    FILE *file = fopen("student.csv", "r");
+    if (file == NULL) {
+        printf("Error: Could not open the CSV file.\n");
+        exit(1);
+    }
+
+    char line[256];
+    while (fgets(line, sizeof(line), file)) {
+        Student *newStudent = (Student *)malloc(sizeof(Student));
+        newStudent->name = (char *)malloc(100);
+
+        // Use sscanf to parse the data from each line
+        sscanf(line, "%99[^,],%f,%d,%d,%d", newStudent->name, &newStudent->CET_percentile, &newStudent->Category, &newStudent->first_priority, &newStudent->second_priority);
+
+        insertStudent(pq, newStudent); // Add the student to the priority queue
+    }
+
+    fclose(file);
+}
+
 int main()
 {
     printf("Enter no. of forms to be accepted : ");
@@ -413,11 +434,11 @@ int main()
     int n;
     do
     {
-
         printf("Enter Your Choice:\n");
         printf("1. Admission Form\n");
         printf("2. Allocate Seats\n");
-        printf("3. Exit\nEnter here : ");
+        printf("3. Take Data from CSV file\n");
+        printf("4. Exit\nEnter here : ");
         scanf("%d", &n);
 
         switch (n)
@@ -431,14 +452,18 @@ int main()
             break;
 
         case 3:
+            readStudentsFromCSV(pq);
+            break;
+
+        case 4:
             printf("Exiting the program.\n");
             for (int i = 0; i < pq->size; i++)
             {
+                free(pq->students[i]->name);
                 free(pq->students[i]);
             }
             free(pq->students);
             free(pq);
-            return 0;
             break;
 
         default:
