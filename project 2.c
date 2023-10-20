@@ -293,6 +293,8 @@ int addToBranch(PriorityQueue *pq, branch *br, Student *st)
         br->open--;
         return 1;
     }
+
+    return 1;
 }
 
 void allocateBranch(PriorityQueue *pq, Student *st, branch *comp, branch *elec, branch *entc, branch *instru)
@@ -355,44 +357,41 @@ void allocateBranch(PriorityQueue *pq, Student *st, branch *comp, branch *elec, 
 }
 
 
-void display_branch_student(branch *br)
-{
+void display_branch_student(branch *br) {
     printf("+----+----------------------+------------+----------+\n");
     printf("| #  | Name                 | Percentile | Category |\n");
     printf("+----+----------------------+------------+----------+\n");
 
-    for (int i = 0; i < br->size; i++)
-    {
+    for (int i = 0; i < br->size; i++) {
         Student *current = br->students[i];
-        printf("| %-2d | %-20s | %10.2f | ", i + 1, current->name, current->CET_percentile);
+        const char* category;
 
-        // Display Category based on the Category value
-        switch (current->Category)
-        {
+        switch (current->Category) {
             case 1:
-                printf("Open");
+                category = "Open";
                 break;
             case 2:
-                printf("OBC");
+                category = "OBC";
                 break;
             case 3:
-                printf("NT");
+                category = "NT";
                 break;
             case 4:
-                printf("SC");
+                category = "SC";
                 break;
             case 5:
-                printf("ST");
+                category = "ST";
                 break;
             default:
-                printf("Unknown");
+                category = "Unknown";
         }
 
-        printf("     |\n");
+        printf("| %-2d | %-20s | %10.2f | %-8s |\n", i + 1, current->name, current->CET_percentile, category);
     }
 
     printf("+----+----------------------+------------+----------+\n\n");
 }
+
 
 
 void Allocation(PriorityQueue *pq)
