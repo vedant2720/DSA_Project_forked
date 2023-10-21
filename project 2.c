@@ -422,26 +422,26 @@ void Allocation(PriorityQueue *pq)
     display_branch_student(instru);
 }
 
-void readStudentsFromCSV(PriorityQueue *pq) {
-    FILE *file = fopen("student.csv", "r");
-    if (file == NULL) {
-        printf("Error: Could not open the CSV file.\n");
-        exit(1);
-    }
+// void readStudentsFromCSV(PriorityQueue *pq) {
+//     FILE *file = fopen("student.csv", "r");
+//     if (file == NULL) {
+//         printf("Error: Could not open the CSV file.\n");
+//         exit(1);
+//     }
 
-    char line[256];
-    while (fgets(line, sizeof(line), file)) {
-        Student *newStudent = (Student *)malloc(sizeof(Student));
-        newStudent->name = (char *)malloc(100);
+//     char line[256];
+//     while (fgets(line, sizeof(line), file)) {
+//         Student *newStudent = (Student *)malloc(sizeof(Student));
+//         newStudent->name = (char *)malloc(100);
 
-        // Use sscanf to parse the data from each line
-        sscanf(line, "%99[^,],%f,%d,%d,%d", newStudent->name, &newStudent->CET_percentile, &newStudent->Category, &newStudent->first_priority, &newStudent->second_priority);
+//         // Use sscanf to parse the data from each line
+//         sscanf(line, "%99[^,],%f,%d,%d,%d", newStudent->name, &newStudent->CET_percentile, &newStudent->Category, &newStudent->first_priority, &newStudent->second_priority);
 
-        insertStudent(pq, newStudent); // Add the student to the priority queue
-    }
+//         insertStudent(pq, newStudent); // Add the student to the priority queue
+//     }
 
-    fclose(file);
-}
+//     fclose(file);
+// }
 
 int main()
 {
